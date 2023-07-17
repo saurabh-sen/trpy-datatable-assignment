@@ -1,53 +1,27 @@
 import React from 'react'
 import {
   Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
   TableCaption,
   TableContainer,
 } from '@chakra-ui/react'
 import { TableProps } from '@/types'
+import DataTableHeaders from '@/components/DataTableHeaders'
+import DataTableBody from '../DataTableBody'
+import DataTableFooter from '../DataTableFooter'
 
-const DataTable = ({caption} : TableProps) => {
+const DataTable = ({ caption, headers, rows, pagination }: TableProps) => {
+
+  const numberOfRows : number[] = [5, 10, 15, 20];
+
   return (
-    <TableContainer maxW='5xl' m="auto">
+    <TableContainer maxW='6xl' m="auto" fontSize="14px">
       <Table variant='striped' colorScheme='teal'>
         <TableCaption>{caption ?? 'Results'}</TableCaption>
-        <Thead>
-          <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th isNumeric>multiply by</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          <Tr>
-            <Td>inches</Td>
-            <Td>millimetres (mm)</Td>
-            <Td isNumeric>25.4</Td>
-          </Tr>
-          <Tr>
-            <Td>feet</Td>
-            <Td>centimetres (cm)</Td>
-            <Td isNumeric>30.48</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td isNumeric>0.91444</Td>
-          </Tr>
-        </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th isNumeric>multiply by</Th>
-          </Tr>
-        </Tfoot>
+        <DataTableHeaders headers={headers} />
+        <DataTableBody rows={rows} />
+        {
+          pagination && <DataTableFooter numberOfRows={numberOfRows} />
+        }
       </Table>
     </TableContainer>
   )
