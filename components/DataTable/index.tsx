@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import {
   Table,
   TableCaption,
@@ -9,15 +10,24 @@ import DataTableHeaders from '@/components/DataTableHeaders'
 import DataTableBody from '../DataTableBody'
 import DataTableFooter from '../DataTableFooter'
 
-const DataTable = ({ caption, headers, rows, pagination }: TableProps) => {
+const DataTable = ({ sortable, headers, rows, caption, pagination, handleSorting }: TableProps) => {
 
-  const numberOfRows : number[] = [5, 10, 15, 20];
+  const numberOfRows: number[] = [5, 10, 15, 20];
+
+  const [sort, setSort] = useState({
+    columnName: "",
+    sortOrder: 'DESC',
+  })
+
+  useEffect(() => {
+    handleSorting(sort.columnName, sort.sortOrder);
+  }, [sort.columnName, sort.sortOrder]);
 
   return (
-    <TableContainer maxW='6xl' m="auto" fontSize="14px">
+    <TableContainer>
       <Table variant='striped' colorScheme='teal'>
         <TableCaption>{caption ?? 'Results'}</TableCaption>
-        <DataTableHeaders headers={headers} />
+        <DataTableHeaders sortable={sortable} headers={headers} setSort={setSort} sort={sort} />
         <DataTableBody rows={rows} />
         {
           pagination && <DataTableFooter numberOfRows={numberOfRows} />

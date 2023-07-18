@@ -1,3 +1,4 @@
+"use client"
 import { TableFooterProps } from "@/types";
 import {
   ArrowLeftIcon,
@@ -6,8 +7,12 @@ import {
 } from "@chakra-ui/icons";
 
 import { Box, Button, Menu, MenuList, MenuItem, MenuButton } from "@chakra-ui/react"
+import { useState } from "react";
 
 const DataTableFooter = ({ numberOfRows }: TableFooterProps) => {
+
+  const [numberOfRowsPerPage, setNumberOfRowsPerPage] = useState<number>(5);
+
   return (
     <Box
       paddingY={3}
@@ -26,12 +31,14 @@ const DataTableFooter = ({ numberOfRows }: TableFooterProps) => {
       <Menu>
         <>
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-            {5}
+            {numberOfRowsPerPage}
           </MenuButton>
-          <MenuList width={12}>
+          <MenuList width={10}>
             {numberOfRows.map((item, idx) => (
               <MenuItem key={idx}
-                onClick={() => console.log(item)}
+                onClick={() => 
+                  setNumberOfRowsPerPage(item)
+                }
               >
                 {item}
               </MenuItem>

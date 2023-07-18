@@ -4,11 +4,20 @@ export type TableProps = {
     headers: string[];
     pagination?: boolean;
     sortable?: boolean;
+    handleSorting: (colName: string, order: string) => void;
 }
 
 export type TableHeaderProps = {
     headers: string[];
     sortable?: boolean;
+    setSort: React.Dispatch<React.SetStateAction<{
+        columnName: string;
+        sortOrder: string;
+    }>>;
+    sort: {
+        columnName: string;
+        sortOrder: string;
+    }
 }
 
 export type TableRowProps = {
